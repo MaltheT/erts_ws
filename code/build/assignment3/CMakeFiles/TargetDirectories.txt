@@ -1,0 +1,3 @@
+/home/malthet/ERTS/code/build/assignment3/CMakeFiles/rebuild_cache.dir
+/home/malthet/ERTS/code/build/assignment3/CMakeFiles/edit_cache.dir
+/home/malthet/ERTS/code/build/assignment3/CMakeFiles/exec.dir

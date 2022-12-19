@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/exec.dir/main.cpp.o  -o exec   -L/home/malthet/systemc-2.3.3-install/lib  -Wl,-rpath,/home/malthet/systemc-2.3.3-install/lib /home/malthet/systemc-2.3.3-install/lib/libsystemc-d.so.2.3.3 -pthread 

@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/malthet/ERTS/code/src/assignment3/main.cpp
+system.h
+/home/malthet/ERTS/code/src/assignment3/system.h
+
+/home/malthet/ERTS/code/src/assignment3/system.h
+iostream
+-
+

@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/exec.dir/controller.cpp.o CMakeFiles/exec.dir/robot_arm.cpp.o CMakeFiles/exec.dir/testbench.cpp.o CMakeFiles/exec.dir/controller_driver.cpp.o  -o exec   -L/home/malthet/systemc-2.3.3-install/lib  -Wl,-rpath,/home/malthet/systemc-2.3.3-install/lib /home/malthet/systemc-2.3.3-install/lib/libsystemc-d.so.2.3.3 -pthread 
