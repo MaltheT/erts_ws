@@ -45,6 +45,7 @@ SC_MODULE(robot_arm) {
 	ofstream myfile;
 
 	void step();
+	int sign(float x);
 
 	//Constructor
 	SC_CTOR(robot_arm) {
