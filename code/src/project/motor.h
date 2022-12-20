@@ -13,8 +13,8 @@
 SC_MODULE(motor) {
 	//Ports
 	sc_in <bool> clk;
-	sc_in<sc_fixed<4,4>> in_ctl_motor_tau;
-	sc_out<sc_fixed<4,4>> out_motor_tau;
+	sc_in<float> in_ctl_motor_tau;
+	sc_out<float> out_motor_tau;
 
 	//variables
 	float motor_tau = 0.0;		// Torque from the motor [N*m]

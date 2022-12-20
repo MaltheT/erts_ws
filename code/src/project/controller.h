@@ -5,6 +5,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+// IDLE, RUNNING, STOP
 
 /*
  * PID controller for angular displacement of the robotic arm. 
@@ -16,11 +17,12 @@ SC_MODULE(controller) {
 	//Ports
 	sc_in <bool> clk;
 	sc_in <bool> reset;
+	sc_in<float> in_q_target;
 
 	//constants
-	float const dt = 0.1; 		// Times step [s]
-    float const K_p = 2.0;     	// Proportional gain [None]
-    float const K_i = 0.5;     	// Integral gain [None]
+	float const dt = 0.001; 	// Times step [s]
+    float const K_p = 5.;     	// Proportional gain [None]
+    float const K_i = 1.0;     	// Integral gain [None]
     float const K_d = 1.0;     	// Derivative gain [None]
 
 	//variables
@@ -33,10 +35,10 @@ SC_MODULE(controller) {
 	float ctl_motor_tau = 0.0;	// Torque from the motor [N*m]
     
 	//outputs
-	sc_out<sc_fixed<4,4>> out_ctl_motor_tau;
+	sc_out<float> out_ctl_motor_tau;
 
     //inputs
-    sc_in<sc_fixed<4,4>> in_snr_q;
+    sc_in<float> in_snr_q;
 
 	void step();
 

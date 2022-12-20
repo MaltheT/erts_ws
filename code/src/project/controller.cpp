@@ -3,6 +3,7 @@
 void controller::step()
 {
     wait();
+    std::cout << "We get into sted! \n" << std::endl;
     while(1)
     {
         wait();

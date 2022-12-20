@@ -7,6 +7,7 @@ SC_MODULE(controller_driver) {
 	//Ports
 	sc_in <bool> clk;
 	sc_out <bool> reset;
+	sc_out <float> out_q_target;
 
 	int retval;
 

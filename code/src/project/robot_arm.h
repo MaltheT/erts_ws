@@ -19,7 +19,7 @@ SC_MODULE(robot_arm) {
 	sc_in <bool> clk;
 
 	//constants
-	float const dt = 0.1; 		// Times step [s]
+	float const dt = 0.001; 	// Times step [s]
 	float const g = -9.81; 		// Gravity [m/s²]
 	float const r = 0.8; 		// Length of robot arm [m]
 	float const F_c = 0.1; 		// Coulomb friction factor [None]
@@ -36,10 +36,10 @@ SC_MODULE(robot_arm) {
 	float motor_tau = 0.0; 		// Torque from the motor [N*m]
 
 	//inputs
-	sc_in<sc_fixed<4,4>> in_motor_tau; 			
+	sc_in<float> in_motor_tau; 			
 
 	//outputs
-	sc_out<sc_fixed<4,4>> out_q;
+	sc_out<float> out_q;
 
 	//file
 	ofstream myfile;

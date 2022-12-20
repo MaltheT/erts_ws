@@ -10,13 +10,13 @@ SC_MODULE(sensor) {
 	sc_in <bool> clk;
 
 	//input
-	sc_in<sc_fixed<4,4>> in_q;
+	sc_in<float> in_q;
 
 	//output
-	sc_out<sc_fixed<4,4>> out_snr_q;
+	sc_out<float> out_snr_q;
 
 	//variables
-	sc_fixed<4,4> snr_q = 0.0;		// Angular displacement [rad]
+	float snr_q = 0.0;		// Angular displacement [rad]
 
 
 	void step(){

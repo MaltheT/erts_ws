@@ -24,10 +24,11 @@ int sc_main (int argc , char *argv[])
 	sc_trace_file *tracefile;
 
 	sc_signal<bool> s_reset;
-	sc_signal<sc_fixed<4,4>> s_q;
-	sc_signal<sc_fixed<4,4>> s_motor_tau;
-	sc_signal<sc_fixed<4,4>> s_snr_q;
-	sc_signal<sc_fixed<4,4>> s_ctl_motor_tau;
+	sc_signal<float> s_q;
+	sc_signal<float> s_motor_tau;
+	sc_signal<float> s_snr_q;
+	sc_signal<float> s_ctl_motor_tau;
+	sc_signal<float> s_q_target;
 
 	// Create a 10ns period clock signal
 	sc_clock s_clk("s_clk", 10, SC_NS);
@@ -51,6 +52,7 @@ int sc_main (int argc , char *argv[])
 	sc_trace(tracefile, s_snr_q,   		"snr_q");
 	sc_trace(tracefile, s_motor_tau,	"motor_tau");
 	sc_trace(tracefile, s_ctl_motor_tau,"ctl_motor_tau");
+	sc_trace(tracefile, s_q_target, 	"q_target");
 
 
 	// Connect the signals to ports
@@ -70,12 +72,14 @@ int sc_main (int argc , char *argv[])
 	Controller.reset(s_reset);
 	Controller.in_snr_q(s_snr_q);
 	Controller.out_ctl_motor_tau(s_ctl_motor_tau);
+	Controller.in_q_target(s_q_target);
 
 	ControllerDriver.clk(s_clk);
+	ControllerDriver.out_q_target(s_q_target);
 	ControllerDriver.reset(s_reset);
 
 	// Sim for 200
-	int end_time = 6000;
+	int end_time = 6000*10;
 	std::cout << "INFO: Simulating" << std::endl;
 	// start simulation
 	sc_start(end_time, SC_NS);

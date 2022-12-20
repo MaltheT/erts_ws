@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -pthread -std=gnu++14
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/malthet/ERTS/code/src/project/include -isystem /home/malthet/systemc-2.3.3-install/include 
+CXX_INCLUDES = -I/home/malthet/erts_ws/code/src/project/include -isystem /home/malthet/systemc-2.3.3-install/include 
 

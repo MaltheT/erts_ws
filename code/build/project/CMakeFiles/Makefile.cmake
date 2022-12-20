@@ -10,7 +10,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.16.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.16.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.16.3/CMakeSystem.cmake"
-  "/home/malthet/ERTS/code/src/project/CMakeLists.txt"
+  "/home/malthet/erts_ws/code/src/project/CMakeLists.txt"
   "/home/malthet/systemc-2.3.3-install/lib/cmake/SystemCLanguage/SystemCLanguageConfig.cmake"
   "/home/malthet/systemc-2.3.3-install/lib/cmake/SystemCLanguage/SystemCLanguageConfigVersion.cmake"
   "/home/malthet/systemc-2.3.3-install/lib/cmake/SystemCLanguage/SystemCLanguageTargets-debug.cmake"
