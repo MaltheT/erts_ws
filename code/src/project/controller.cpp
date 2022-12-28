@@ -12,18 +12,24 @@ void controller::step()
         switch (s)
         {
         case RUNNING:
-            regulate();
-            if(abs(q - q_target) < threshold){
-                angle_reached();
+            regulate();            
+            led_counter++;
+            out_leds.write(led_counter);
+            if(angle_reached()){
+                s = IDLE;
             }
             break;
         
         case STOP:
             out_ctl_motor_tau.write(0.0);
+            led_counter = 0;
+            out_leds.write(led_counter);
             break;
 
         case IDLE:
             regulate();
+            led_counter = 15;
+            out_leds.write(led_counter);
             break;
             
         default:

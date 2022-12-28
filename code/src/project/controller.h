@@ -3,6 +3,7 @@
 #include <systemc.h>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <stdbool.h>
 
 // IDLE, RUNNING, STOP
 
@@ -16,6 +17,7 @@ SC_MODULE(controller) {
 	//Ports
 	sc_in <bool> clk;
 	sc_in <bool> reset;
+	sc_out<sc_uint<4> > out_leds;
 
 	//outputs
 	sc_out<float> out_ctl_motor_tau;
@@ -29,8 +31,8 @@ SC_MODULE(controller) {
 
 	//constants
     float const K_p = 22.;     	// Proportional gain [None]
-    float const K_i = 11.0;     // Integral gain [None]
-    float const K_d = 5.5;     	// Derivative gain [None]
+    float const K_i = 20.0;     // Integral gain [None]
+    float const K_d = 7.;     	// Derivative gain [None]
 	float const threshold = 0.01; 
 
 	//variables
@@ -41,6 +43,7 @@ SC_MODULE(controller) {
     float q_error_deriv = 0.0; 	// The rate of change of the error signal [rad]
     float q_error_integ = 0.0; 	// Error signal integrated [rad]
 	float ctl_motor_tau = 0.0;	// Torque from the motor [N*m]
+	sc_uint<4> led_counter;
     
 	//states
 	enum state {IDLE, RUNNING, STOP}; 
@@ -56,8 +59,13 @@ SC_MODULE(controller) {
 		}
 	}
 
-	void angle_reached(){
-		s = IDLE;
+	bool angle_reached(){
+		if(abs(q - q_target) < threshold){
+			return true;
+		} 
+		else {
+			return false;
+		}
 	}
 
 	void emergency_stop(){
@@ -66,7 +74,7 @@ SC_MODULE(controller) {
 
 	void start(){
 		if(s == STOP){
-		s = IDLE;
+		s = RUNNING;
 		}
 	}
 
