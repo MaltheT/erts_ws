@@ -12,6 +12,9 @@
 #else
 	#include "controller.h"
 #endif
+	
+
+using namespace sc_core;
 
 
 int sc_main (int argc , char *argv[])
@@ -21,6 +24,9 @@ int sc_main (int argc , char *argv[])
 	// sc_report_handler::set_actions( SC_ID_VECTOR_CONTAINS_LOGIC_VALUE_, SC_LOG);
 	// sc_report_handler::set_actions( SC_ID_OBJECT_EXISTS_, SC_LOG);
 
+	sc_set_time_resolution(1, SC_FS);
+	sc_set_default_time_unit(1, SC_SEC);
+	
 	sc_trace_file *tracefile;
 
 	sc_signal<bool> s_reset;
@@ -28,10 +34,12 @@ int sc_main (int argc , char *argv[])
 	sc_signal<float> s_motor_tau;
 	sc_signal<float> s_snr_q;
 	sc_signal<float> s_ctl_motor_tau;
-	sc_signal<float> s_q_target;
 
-	// Create a 10ns period clock signal
-	sc_clock s_clk("s_clk", 10, SC_NS);
+	//Creating clocks for all components of the system
+	sc_clock s_robot_arm_clk("s_robot_arm_clk", 	10, SC_MS);
+	sc_clock s_motor_clk("s_motor_clk", 			10, SC_MS);
+	sc_clock s_sensor_clk("s_sensor_clk", 			10, SC_MS);
+	sc_clock s_controller_clk("s_controller_clk", 	10, SC_MS);
 
 	robot_arm RobotArm("robot_arm");
 	motor Motor("motor");
@@ -44,45 +52,46 @@ int sc_main (int argc , char *argv[])
 	if (!tracefile) cout << "Could not create trace file." << endl;
 
 	// Set resolution of trace file to be in 10 US
-	tracefile->set_time_unit(1, SC_NS);
+	tracefile->set_time_unit(1, SC_MS);
 
-	sc_trace(tracefile, s_clk,    		"clock");
-	sc_trace(tracefile, s_reset,  		"reset");
-	sc_trace(tracefile, s_q,   			"q");
-	sc_trace(tracefile, s_snr_q,   		"snr_q");
-	sc_trace(tracefile, s_motor_tau,	"motor_tau");
-	sc_trace(tracefile, s_ctl_motor_tau,"ctl_motor_tau");
-	sc_trace(tracefile, s_q_target, 	"q_target");
+	sc_trace(tracefile, s_robot_arm_clk,	"s_robot_arm_clk");
+	sc_trace(tracefile, s_motor_clk,    	"s_motor_clk");
+	sc_trace(tracefile, s_sensor_clk,    	"s_sensor_clk");
+	sc_trace(tracefile, s_controller_clk,   "s_controller_clk");
+
+	sc_trace(tracefile, s_reset,  			"reset");
+	sc_trace(tracefile, s_q,   				"q");
+	sc_trace(tracefile, s_snr_q,   			"snr_q");
+	sc_trace(tracefile, s_motor_tau,		"motor_tau");
+	sc_trace(tracefile, s_ctl_motor_tau,	"ctl_motor_tau");
 
 
 	// Connect the signals to ports
-	RobotArm.clk(s_clk);
+	RobotArm.clk(s_robot_arm_clk);
 	RobotArm.out_q(s_q);
 	RobotArm.in_motor_tau(s_motor_tau);
 
-	Motor.clk(s_clk);
+	Motor.clk(s_motor_clk);
 	Motor.in_ctl_motor_tau(s_ctl_motor_tau);
 	Motor.out_motor_tau(s_motor_tau);
 
-	Sensor.clk(s_clk);
+	Sensor.clk(s_sensor_clk);
 	Sensor.in_q(s_q);
 	Sensor.out_snr_q(s_snr_q);
 
-	Controller.clk(s_clk);
+	Controller.clk(s_controller_clk);
 	Controller.reset(s_reset);
 	Controller.in_snr_q(s_snr_q);
 	Controller.out_ctl_motor_tau(s_ctl_motor_tau);
-	Controller.in_q_target(s_q_target);
 
-	ControllerDriver.clk(s_clk);
-	ControllerDriver.out_q_target(s_q_target);
+	ControllerDriver.clk(s_controller_clk);
 	ControllerDriver.reset(s_reset);
 
 	// Sim for 200
-	int end_time = 6000*10;
+	int end_time = 6000;
 	std::cout << "INFO: Simulating" << std::endl;
 	// start simulation
-	sc_start(end_time, SC_NS);
+	sc_start(end_time, SC_MS);
 	sc_close_vcd_trace_file(tracefile);
 	std::cout << "Created IOSC_Wave.vcd" << std::endl;
 

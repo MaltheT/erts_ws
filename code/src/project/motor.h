@@ -1,6 +1,5 @@
 #pragma once
 
-#define SC_INCLUDE_FX 
 #include <systemc.h>
 #include <math.h>
 
@@ -8,7 +7,7 @@
 /*
  * Motor actuator for the robotic arm joint.
  * Recieves as input a motor torque signal from the PID controller,
- * and actuates robotic arm. 
+ * and actuates the robotic arm joint. 
  */
 SC_MODULE(motor) {
 	//Ports

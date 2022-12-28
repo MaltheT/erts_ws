@@ -1,6 +1,5 @@
 #pragma once
 
-#define SC_INCLUDE_FX 
 #include <systemc.h>
 #include <math.h>
 

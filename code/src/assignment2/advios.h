@@ -8,7 +8,6 @@
 SC_MODULE(advios)
 {
     // Ports
-
     sc_in<bool> clk;
     sc_in<bool> reset;
     sc_in<sc_uint<num_bits> > ctrl;

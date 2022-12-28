@@ -1,6 +1,5 @@
 # pragma once
 
-#define SC_INCLUDE_FX 
 #include <systemc.h>
 #include <math.h>
 #include <iostream>
@@ -18,8 +17,11 @@ SC_MODULE(robot_arm) {
 	//Ports
 	sc_in <bool> clk;
 
+	//time
+	float dt = 0.0;	 			// Delta time [s]
+	float time = 0.0; 			// Time [s]
+
 	//constants
-	float const dt = 0.001; 	// Times step [s]
 	float const g = -9.81; 		// Gravity [m/s²]
 	float const r = 0.8; 		// Length of robot arm [m]
 	float const F_c = 0.1; 		// Coulomb friction factor [None]
@@ -45,7 +47,6 @@ SC_MODULE(robot_arm) {
 	ofstream myfile;
 
 	void step();
-	int sign(float x);
 
 	//Constructor
 	SC_CTOR(robot_arm) {

@@ -1,6 +1,5 @@
 # pragma once
 
-#define SC_INCLUDE_FX 
 #include <systemc.h>
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -17,13 +16,22 @@ SC_MODULE(controller) {
 	//Ports
 	sc_in <bool> clk;
 	sc_in <bool> reset;
-	sc_in<float> in_q_target;
+
+	//outputs
+	sc_out<float> out_ctl_motor_tau;
+
+    //inputs
+    sc_in<float> in_snr_q;
+
+	//time
+	float dt = 0.0;			 	// Delta time [s]
+	float time = 0.0;			// Time [s]
 
 	//constants
-	float const dt = 0.001; 	// Times step [s]
-    float const K_p = 5.;     	// Proportional gain [None]
-    float const K_i = 1.0;     	// Integral gain [None]
-    float const K_d = 1.0;     	// Derivative gain [None]
+    float const K_p = 22.;     	// Proportional gain [None]
+    float const K_i = 11.0;     // Integral gain [None]
+    float const K_d = 5.5;     	// Derivative gain [None]
+	float const threshold = 0.01; 
 
 	//variables
     float q = 0.0;		        // Angular displacement [rad]
@@ -34,17 +42,38 @@ SC_MODULE(controller) {
     float q_error_integ = 0.0; 	// Error signal integrated [rad]
 	float ctl_motor_tau = 0.0;	// Torque from the motor [N*m]
     
-	//outputs
-	sc_out<float> out_ctl_motor_tau;
-
-    //inputs
-    sc_in<float> in_snr_q;
+	//states
+	enum state {IDLE, RUNNING, STOP}; 
+	state s = RUNNING;
 
 	void step();
+	void regulate();
+
+	void change_angle(float new_q_target){
+		if(s == IDLE){
+			q_target = new_q_target;
+			s = RUNNING;
+		}
+	}
+
+	void angle_reached(){
+		s = IDLE;
+	}
+
+	void emergency_stop(){
+		s = STOP;
+	}
+
+	void start(){
+		if(s == STOP){
+		s = IDLE;
+		}
+	}
 
 	//Constructor
 	SC_CTOR(controller){
 
+		// sc_set_default_time_unit(1, SC_SEC);
 		//Process Registration
 		SC_CTHREAD(step, clk.pos());
 		reset_signal_is(reset, true);
