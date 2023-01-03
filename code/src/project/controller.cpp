@@ -2,19 +2,25 @@
 
 void controller::step()
 {
-    wait();
+	#pragma HLS resource core = AXI4LiteS metadata = "-bus_bundle slv0" variable = in_snr_q
+	//
+	#pragma HLS resource core = AXI4LiteS metadata = "-bus_bundle slv0" variable = out_ctl_motor_tau
 
-    while(1)
+	wait();
+
+    step_label0:while(1)
     {
         wait();
-        q = in_snr_q.read();
+        q = ((float)in_snr_q.read())/1000;
+        //q = q / 1000;
+
 
         switch (s)
         {
         case RUNNING:
             regulate();            
             led_counter++;
-            out_leds.write(led_counter);
+            outLeds.write(led_counter);
             if(angle_reached()){
                 s = IDLE;
             }
@@ -23,13 +29,13 @@ void controller::step()
         case STOP:
             out_ctl_motor_tau.write(0.0);
             led_counter = 0;
-            out_leds.write(led_counter);
+            outLeds.write(led_counter);
             break;
 
         case IDLE:
             regulate();
             led_counter = 15;
-            out_leds.write(led_counter);
+            outLeds.write(led_counter);
             break;
             
         default:
@@ -39,8 +45,9 @@ void controller::step()
 }
 
 void controller::regulate(){
-    dt = sc_time_stamp().to_seconds() - time;       // Dynamic delta time calculation
-    time = sc_time_stamp().to_seconds();
+    dt = 0.01;
+    //dt = sc_time_stamp().to_seconds() - time;  // Dynamic delta time calculation
+    //time = sc_time_stamp().to_seconds();
 
     q_error_prev = q_error;                         // Save previous error
     q_error = q_target - q;                         // Calculate new error
@@ -54,5 +61,5 @@ void controller::regulate(){
 
     // PID:
     ctl_motor_tau = K_p * q_error + K_i * q_error_integ + K_d * q_error_deriv;
-    out_ctl_motor_tau.write(ctl_motor_tau);
+    out_ctl_motor_tau.write(int(ctl_motor_tau * 1000));
 }

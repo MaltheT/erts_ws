@@ -19,10 +19,10 @@ using namespace sc_core;
 
 int sc_main (int argc , char *argv[])
 {
-	// sc_report_handler::set_actions("/IEEE_Std_1666/deprecated", SC_DO_NOTHING);
-	// sc_report_handler::set_actions( SC_ID_LOGIC_X_TO_BOOL_, SC_LOG);
-	// sc_report_handler::set_actions( SC_ID_VECTOR_CONTAINS_LOGIC_VALUE_, SC_LOG);
-	// sc_report_handler::set_actions( SC_ID_OBJECT_EXISTS_, SC_LOG);
+	sc_report_handler::set_actions("/IEEE_Std_1666/deprecated", SC_DO_NOTHING);
+	sc_report_handler::set_actions( SC_ID_LOGIC_X_TO_BOOL_, SC_LOG);
+	sc_report_handler::set_actions( SC_ID_VECTOR_CONTAINS_LOGIC_VALUE_, SC_LOG);
+	sc_report_handler::set_actions( SC_ID_OBJECT_EXISTS_, SC_LOG);
 
 	// sc_set_time_resolution(1, SC_FS);
 	// sc_set_default_time_unit(1, SC_SEC);
@@ -32,12 +32,12 @@ int sc_main (int argc , char *argv[])
 	sc_signal<bool> s_reset;
 	sc_signal<float> s_q;
 	sc_signal<float> s_motor_tau;
-	sc_signal<float> s_snr_q;
-	sc_signal<float> s_ctl_motor_tau;
+	sc_signal<sc_int <16 > > s_snr_q;
+	sc_signal<sc_int <16 > > s_ctl_motor_tau;
 	sc_signal<sc_uint<4> > s_leds;
 
 	//Creating clocks for all components of the system
-	sc_clock s_robot_arm_clk("s_robot_arm_clk", 	1, SC_MS);
+	sc_clock s_robot_arm_clk("s_robot_arm_clk", 	10, SC_MS);
 	sc_clock s_motor_clk("s_motor_clk", 			10, SC_MS);
 	sc_clock s_sensor_clk("s_sensor_clk", 			10, SC_MS);
 	sc_clock s_controller_clk("s_controller_clk", 	10, SC_MS);
@@ -85,7 +85,7 @@ int sc_main (int argc , char *argv[])
 	Controller.reset(s_reset);
 	Controller.in_snr_q(s_snr_q);
 	Controller.out_ctl_motor_tau(s_ctl_motor_tau);
-	Controller.out_leds(s_leds);
+	Controller.outLeds(s_leds);
 
 	ControllerDriver.clk(s_controller_clk);
 	ControllerDriver.reset(s_reset);

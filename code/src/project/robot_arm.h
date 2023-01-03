@@ -18,27 +18,27 @@ SC_MODULE(robot_arm) {
 	sc_in <bool> clk;
 
 	//time
-	float dt = 0.0;	 			// Delta time [s]
-	float time = 0.0; 			// Time [s]
+	float dt;	 			// Delta time [s]
+	float time; 			// Time [s]
 
 	//constants
-	float const g = -9.81; 		// Gravity [m/s²]
-	float const r = 0.8; 		// Length of robot arm [m]
-	float const F_c = 0.1; 		// Coulomb friction factor [None]
-	float const F_v = 0.05; 	// Viscous friction factor [None]
-	float const m = 1.2; 		// Mass of end effector [kg]
+	float  g; 		// Gravity [m/s²]
+	float  r; 		// Length of robot arm [m]
+	float  F_c; 		// Coulomb friction factor [None]
+	float  F_v; 	// Viscous friction factor [None]
+	float  m; 		// Mass of end effector [kg]
 
 	//variables
-	float q_ddot = 0.0;			// Angular acceleartion [rad/s²]
-	float q_dot = 0.0;			// Angular velocity [rad/s]
-	float q = 0.0;				// Angular displacement [rad]
-	float g_tau = 0.0;			// Torque due to gravity [N*m]
-	float F_tau = 0.0;			// Torque due to friction [N*m]
-	float interia = m * r*r;	// Mass moment of inertia [kg*m²]
-	float motor_tau = 0.0; 		// Torque from the motor [N*m]
+	float q_ddot;			// Angular acceleartion [rad/s²]
+	float q_dot;			// Angular velocity [rad/s]
+	float q;				// Angular displacement [rad]
+	float g_tau;			// Torque due to gravity [N*m]
+	float F_tau;			// Torque due to friction [N*m]
+	float interia;	// Mass moment of inertia [kg*m²]
+	float motor_tau; 		// Torque from the motor [N*m]
 
 	//inputs
-	sc_in<float> in_motor_tau; 			
+	sc_in<float> in_motor_tau;
 
 	//outputs
 	sc_out<float> out_q;
@@ -50,6 +50,28 @@ SC_MODULE(robot_arm) {
 
 	//Constructor
 	SC_CTOR(robot_arm) {
+
+		// Init time
+		dt = 0.0;	 			// Delta time [s]
+		time = 0.0; 			// Time [s]
+
+
+		// Initializing constants
+		g = -9.81; 		// Gravity [m/s²]
+		r = 0.8; 		// Length of robot arm [m]
+		F_c = 0.1; 		// Coulomb friction factor [None]
+		F_v = 0.05; 	// Viscous friction factor [None]
+		m = 1.2; 		// Mass of end effector [kg]
+
+
+		// Initializing variables
+		q_ddot = 0.0;
+		q_dot = 0.0;
+		q = 0.0;
+		g_tau = 0.0;
+		F_tau = 0.0;
+		interia = m * r*r;
+		motor_tau = 0.0;
 		
 		myfile.open ("output.txt");
 		//Process Registration

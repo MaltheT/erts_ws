@@ -17,37 +17,37 @@ SC_MODULE(controller) {
 	//Ports
 	sc_in <bool> clk;
 	sc_in <bool> reset;
-	sc_out<sc_uint<4> > out_leds;
+	sc_out <sc_uint <4> > outLeds;
 
 	//outputs
-	sc_out<float> out_ctl_motor_tau;
+	sc_out <sc_int <16 > > out_ctl_motor_tau;
 
     //inputs
-    sc_in<float> in_snr_q;
+    sc_in <sc_int <16 > > in_snr_q;
 
 	//time
-	float dt = 0.0;			 	// Delta time [s]
-	float time = 0.0;			// Time [s]
+	float dt;		// Delta time [s]
+	float time;		// Time [s]
 
 	//constants
-    float const K_p = 22.;     	// Proportional gain [None]
-    float const K_i = 20.0;     // Integral gain [None]
-    float const K_d = 7.;     	// Derivative gain [None]
-	float const threshold = 0.01; 
+    float K_p;     	// Proportional gain [None]
+    float K_i;		// Integral gain [None]
+    float K_d;     	// Derivative gain [None]
+	float threshold;
 
 	//variables
-    float q = 0.0;		        // Angular displacement [rad]
-	float q_target = 1.;		// Target angular displacement [rad]
-	float q_error = 0.0;		// Angular error signal [rad]
-    float q_error_prev = 0.0;  	// Previous error [rad]
-    float q_error_deriv = 0.0; 	// The rate of change of the error signal [rad]
-    float q_error_integ = 0.0; 	// Error signal integrated [rad]
-	float ctl_motor_tau = 0.0;	// Torque from the motor [N*m]
-	sc_uint<4> led_counter;
+    float q;		        // Angular displacement [rad]
+	float q_target;			// Target angular displacement [rad]
+	float q_error;			// Angular error signal [rad]
+    float q_error_prev;  	// Previous error [rad]
+    float q_error_deriv; 	// The rate of change of the error signal [rad]
+    float q_error_integ; 	// Error signal integrated [rad]
+	float ctl_motor_tau;	// Torque from the motor [N*m]
+	sc_uint <4> led_counter;
     
 	//states
 	enum state {IDLE, RUNNING, STOP}; 
-	state s = RUNNING;
+	state s;
 
 	void step();
 	void regulate();
@@ -80,6 +80,33 @@ SC_MODULE(controller) {
 
 	//Constructor
 	SC_CTOR(controller){
+
+
+		// INITIALIZING VALUES________________________________________
+		//time
+		dt = 0.0;			 	// Delta time [s]
+		time = 0.0;			// Time [s]
+
+		//constants
+		K_p = 22.;     	// Proportional gain [None]
+		K_i = 20.0;     // Integral gain [None]
+		K_d = 7.;     	// Derivative gain [None]
+		threshold = 0.01;
+
+		//variables
+		q = 0.0;		        // Angular displacement [rad]
+		q_target = 1.;		// Target angular displacement [rad]
+		q_error = 0.0;		// Angular error signal [rad]
+		q_error_prev = 0.0;  	// Previous error [rad]
+		q_error_deriv = 0.0; 	// The rate of change of the error signal [rad]
+		q_error_integ = 0.0; 	// Error signal integrated [rad]
+		ctl_motor_tau = 0.0;	// Torque from the motor [N*m]
+
+		s = RUNNING;
+
+
+
+
 
 		// sc_set_default_time_unit(1, SC_SEC);
 		//Process Registration

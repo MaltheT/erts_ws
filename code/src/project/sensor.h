@@ -12,10 +12,10 @@ SC_MODULE(sensor) {
 	sc_in<float> in_q;
 
 	//output
-	sc_out<float> out_snr_q;
+	sc_out<sc_int <16 > > out_snr_q;
 
 	//variables
-	float snr_q = 0.0;		// Angular displacement [rad]
+	float snr_q;		// Angular displacement [rad]
 
 
 	void step(){
@@ -24,13 +24,14 @@ SC_MODULE(sensor) {
 		{
 			wait();
 			snr_q = in_q.read(); 
-			out_snr_q.write(snr_q);
+			out_snr_q.write(int(snr_q*1000));
 		}
 	}
 
 	//Constructor
 	SC_CTOR(sensor){
 
+		snr_q = 0.0;
 		//Process Registration
 		SC_CTHREAD(step, clk.pos());
 	}
