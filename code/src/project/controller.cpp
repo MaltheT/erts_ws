@@ -3,23 +3,24 @@
 void controller::step()
 {
 	#pragma HLS resource core = AXI4LiteS metadata = "-bus_bundle slv0" variable = in_snr_q
-	//
 	#pragma HLS resource core = AXI4LiteS metadata = "-bus_bundle slv0" variable = out_ctl_motor_tau
+	#pragma HLS resource core = AXI4LiteS metadata = "-bus_bundle slv0" variable = in_q_target
 
 	wait();
 
     step_label0:while(1)
     {
-        wait();
+        for(int i = 0; i < 1000000; i++){
+        	wait();
+        }
         q = ((float)in_snr_q.read())/1000;
-        //q = q / 1000;
-
+        q_target = ((float)in_q_target.read())/1000;
 
         switch (s)
         {
         case RUNNING:
             regulate();            
-            led_counter++;
+            led_counter = 7;
             outLeds.write(led_counter);
             if(angle_reached()){
                 s = IDLE;
@@ -61,5 +62,6 @@ void controller::regulate(){
 
     // PID:
     ctl_motor_tau = K_p * q_error + K_i * q_error_integ + K_d * q_error_deriv;
+    std::cout << ctl_motor_tau << std::endl;
     out_ctl_motor_tau.write(int(ctl_motor_tau * 1000));
 }
