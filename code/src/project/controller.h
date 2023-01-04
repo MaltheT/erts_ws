@@ -7,7 +7,7 @@
 
 // IDLE, RUNNING, STOP
 
-/*
+/*A
  * PID controller for angular displacement of the robotic arm. 
  * Recieves as input the current displacement of the arm
  * red by a sensor, and outputs a singal to the motor that drives
@@ -24,6 +24,7 @@ SC_MODULE(controller) {
 
     //inputs
     sc_in <sc_int <16 > > in_snr_q;
+    sc_in <sc_int <16 > > in_q_target;
 
 	//time
 	float dt;		// Delta time [s]
@@ -103,8 +104,6 @@ SC_MODULE(controller) {
 		ctl_motor_tau = 0.0;	// Torque from the motor [N*m]
 
 		s = RUNNING;
-
-
 
 
 
