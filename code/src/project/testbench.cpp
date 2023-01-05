@@ -19,10 +19,10 @@ using namespace sc_core;
 
 int sc_main (int argc , char *argv[])
 {
-	sc_report_handler::set_actions("/IEEE_Std_1666/deprecated", SC_DO_NOTHING);
-	sc_report_handler::set_actions( SC_ID_LOGIC_X_TO_BOOL_, SC_LOG);
-	sc_report_handler::set_actions( SC_ID_VECTOR_CONTAINS_LOGIC_VALUE_, SC_LOG);
-	sc_report_handler::set_actions( SC_ID_OBJECT_EXISTS_, SC_LOG);
+	// sc_report_handler::set_actions("/IEEE_Std_1666/deprecated", SC_DO_NOTHING);
+	// sc_report_handler::set_actions( SC_ID_LOGIC_X_TO_BOOL_, SC_LOG);
+	// sc_report_handler::set_actions( SC_ID_VECTOR_CONTAINS_LOGIC_VALUE_, SC_LOG);
+	// sc_report_handler::set_actions( SC_ID_OBJECT_EXISTS_, SC_LOG);
 
 	// sc_set_time_resolution(1, SC_FS);
 	// sc_set_default_time_unit(1, SC_SEC);
@@ -53,7 +53,7 @@ int sc_main (int argc , char *argv[])
 	if (!tracefile) cout << "Could not create trace file." << endl;
 
 	// Set resolution of trace file to be in 10 US
-	tracefile->set_time_unit(1, SC_MS);
+	tracefile->set_time_unit(100, SC_NS);
 
 	sc_trace(tracefile, s_robot_arm_clk,	"s_robot_arm_clk");
 	sc_trace(tracefile, s_motor_clk,    	"s_motor_clk");

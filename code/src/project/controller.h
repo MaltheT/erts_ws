@@ -24,16 +24,16 @@ SC_MODULE(controller) {
 
     //inputs
     sc_in <sc_int <16 > > in_snr_q;
-    sc_in <sc_int <16 > > in_q_target;
+    // sc_in <sc_int <16 > > in_q_target;
 
 	//time
-	float dt;		// Delta time [s]
-	float time;		// Time [s]
+	float dt;				// Delta time [s]
+	float time;				// Time [s]
 
 	//constants
-    float K_p;     	// Proportional gain [None]
-    float K_i;		// Integral gain [None]
-    float K_d;     	// Derivative gain [None]
+    float K_p;     			// Proportional gain [None]
+    float K_i;				// Integral gain [None]
+    float K_d;     			// Derivative gain [None]
 	float threshold;
 
 	//variables
@@ -85,29 +85,26 @@ SC_MODULE(controller) {
 
 		// INITIALIZING VALUES________________________________________
 		//time
-		dt = 0.0;			 	// Delta time [s]
-		time = 0.0;			// Time [s]
+		dt = 0.0;
+		time = 0.0;
 
 		//constants
-		K_p = 22.;     	// Proportional gain [None]
-		K_i = 20.0;     // Integral gain [None]
-		K_d = 7.;     	// Derivative gain [None]
+		K_p = 22.;
+		K_i = 20.0;
+		K_d = 7.;
 		threshold = 0.01;
 
 		//variables
-		q = 0.0;		        // Angular displacement [rad]
-		q_target = 1.;		// Target angular displacement [rad]
-		q_error = 0.0;		// Angular error signal [rad]
-		q_error_prev = 0.0;  	// Previous error [rad]
-		q_error_deriv = 0.0; 	// The rate of change of the error signal [rad]
-		q_error_integ = 0.0; 	// Error signal integrated [rad]
-		ctl_motor_tau = 0.0;	// Torque from the motor [N*m]
+		q = 0.0;
+		q_target = 1.;
+		q_error = 0.0;
+		q_error_prev = 0.0;
+		q_error_deriv = 0.0;
+		q_error_integ = 0.0;
+		ctl_motor_tau = 0.0;
 
 		s = RUNNING;
 
-
-
-		// sc_set_default_time_unit(1, SC_SEC);
 		//Process Registration
 		SC_CTHREAD(step, clk.pos());
 		reset_signal_is(reset, true);

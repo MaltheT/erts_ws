@@ -22,11 +22,11 @@ SC_MODULE(robot_arm) {
 	float time; 			// Time [s]
 
 	//constants
-	float  g; 		// Gravity [m/s²]
-	float  r; 		// Length of robot arm [m]
-	float  F_c; 		// Coulomb friction factor [None]
-	float  F_v; 	// Viscous friction factor [None]
-	float  m; 		// Mass of end effector [kg]
+	float  g; 				// Gravity [m/s²]
+	float  r; 				// Length of robot arm [m]
+	float  F_c; 			// Coulomb friction factor [None]
+	float  F_v; 			// Viscous friction factor [None]
+	float  m; 				// Mass of end effector [kg]
 
 	//variables
 	float q_ddot;			// Angular acceleartion [rad/s²]
@@ -34,7 +34,7 @@ SC_MODULE(robot_arm) {
 	float q;				// Angular displacement [rad]
 	float g_tau;			// Torque due to gravity [N*m]
 	float F_tau;			// Torque due to friction [N*m]
-	float interia;	// Mass moment of inertia [kg*m²]
+	float interia;			// Mass moment of inertia [kg*m²]
 	float motor_tau; 		// Torque from the motor [N*m]
 
 	//inputs
@@ -73,7 +73,7 @@ SC_MODULE(robot_arm) {
 		interia = m * r*r;
 		motor_tau = 0.0;
 		
-		myfile.open ("output.txt");
+		myfile.open ("output2.txt");
 		//Process Registration
 		SC_CTHREAD(step, clk.pos());
 	}

@@ -8,13 +8,14 @@ void controller::step()
 
 	wait();
 
-    step_label0:while(1)
+    while(1)
     {
-        for(int i = 0; i < 1000000; i++){
-        	wait();
-        }
+        wait();
+        // for(int i = 0; i < 1000000; i++){
+        // 	wait();
+        // }
         q = ((float)in_snr_q.read())/1000;
-        q_target = ((float)in_q_target.read())/1000;
+        // q_target = ((float)in_q_target.read())/1000;
 
         switch (s)
         {
@@ -62,6 +63,6 @@ void controller::regulate(){
 
     // PID:
     ctl_motor_tau = K_p * q_error + K_i * q_error_integ + K_d * q_error_deriv;
-    std::cout << ctl_motor_tau << std::endl;
+    
     out_ctl_motor_tau.write(int(ctl_motor_tau * 1000));
 }
