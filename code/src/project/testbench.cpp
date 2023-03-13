@@ -37,10 +37,10 @@ int sc_main (int argc , char *argv[])
 	sc_signal<sc_uint<4> > s_leds;
 
 	//Creating clocks for all components of the system
-	sc_clock s_robot_arm_clk("s_robot_arm_clk", 	10, SC_MS);
-	sc_clock s_motor_clk("s_motor_clk", 			10, SC_MS);
-	sc_clock s_sensor_clk("s_sensor_clk", 			10, SC_MS);
-	sc_clock s_controller_clk("s_controller_clk", 	10, SC_MS);
+	sc_clock s_robot_arm_clk("s_robot_arm_clk", 	0.2, SC_MS);
+	sc_clock s_motor_clk("s_motor_clk", 			0.2, SC_MS);
+	sc_clock s_sensor_clk("s_sensor_clk", 			0.2, SC_MS);
+	sc_clock s_controller_clk("s_controller_clk", 	0.2, SC_MS);
 
 	robot_arm RobotArm("robot_arm");
 	motor Motor("motor");

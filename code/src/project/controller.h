@@ -47,7 +47,7 @@ SC_MODULE(controller) {
 	sc_uint <4> led_counter;
     
 	//states
-	enum state {IDLE, RUNNING, STOP}; 
+	enum state {IDLE, MOVING, STOP}; 
 	state s;
 
 	void step();
@@ -56,7 +56,7 @@ SC_MODULE(controller) {
 	void change_angle(float new_q_target){
 		if(s == IDLE){
 			q_target = new_q_target;
-			s = RUNNING;
+			s = MOVING;
 		}
 	}
 
@@ -75,7 +75,7 @@ SC_MODULE(controller) {
 
 	void start(){
 		if(s == STOP){
-		s = RUNNING;
+		s = MOVING;
 		}
 	}
 
@@ -103,7 +103,7 @@ SC_MODULE(controller) {
 		q_error_integ = 0.0;
 		ctl_motor_tau = 0.0;
 
-		s = RUNNING;
+		s = MOVING;
 
 		//Process Registration
 		SC_CTHREAD(step, clk.pos());

@@ -10,7 +10,7 @@ void robot_arm::step()
 
 		//dt = sc_time_stamp().to_seconds() - time;		// Dynamic delta time calculation
 		//time = sc_time_stamp().to_seconds();
-		dt = 0.01;
+		dt = 0.0002;
 		// Advance states:
 		g_tau = m * g * r * cos(q);
 		F_tau = F_c * tanh(q_dot) + F_v * q_dot;

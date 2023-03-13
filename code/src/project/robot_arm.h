@@ -73,7 +73,7 @@ SC_MODULE(robot_arm) {
 		interia = m * r*r;
 		motor_tau = 0.0;
 		
-		myfile.open ("output2.txt");
+		myfile.open ("5000Hz.txt");
 		//Process Registration
 		SC_CTHREAD(step, clk.pos());
 	}

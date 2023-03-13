@@ -24,7 +24,7 @@ SC_MODULE(sensor) {
 		{
 			wait();
 			snr_q = in_q.read(); 
-			out_snr_q.write(int(snr_q*1000));
+			out_snr_q.write(int(snr_q*100000));
 		}
 	}
 

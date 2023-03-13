@@ -24,7 +24,7 @@ SC_MODULE(motor) {
 		while (1)
 		{
 			wait();
-			motor_tau = ((float)in_ctl_motor_tau.read())/1000;
+			motor_tau = ((float)in_ctl_motor_tau.read())/100000;
 			//std::cout << "In value: " << ((float)in_ctl_motor_tau.read())/1000 << std::endl;
 			//std::cout << motor_tau << std::endl;
 			out_motor_tau.write(motor_tau);

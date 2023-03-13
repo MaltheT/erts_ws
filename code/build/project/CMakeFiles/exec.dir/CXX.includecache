@@ -30,10 +30,6 @@ systemc.h
 math.h
 -
 
-/home/malthet/erts_ws/code/src/project/robot_arm.cpp
-robot_arm.h
-/home/malthet/erts_ws/code/src/project/robot_arm.h
-
 /home/malthet/erts_ws/code/src/project/robot_arm.h
 systemc.h
 -
